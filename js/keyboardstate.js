@@ -12,14 +12,14 @@ export default class KeyBoardState {
 	}
 	
 	
-	addMapping(keyCode, cb) {
-		this.keyMap.set(keyCode, cb);
+	addMapping(code, cb) {
+		this.keyMap.set(code, cb);
 	}
 	
 	
 	handleEvent(e) {
-		const {keyCode} = e;
-		if (!this.keyMap.has(keyCode)) {
+		const {code} = e;
+		if (!this.keyMap.has(code)) {
 			return;
 		}
 		
@@ -28,13 +28,13 @@ export default class KeyBoardState {
 		const keyState = e.type === 'keydown' ? PRESSED : RELEASED;
 		
 		// состояние нажатия клавиши не изменилось
-		if (this.keyStates.get(keyCode) === keyState) {
+		if (this.keyStates.get(code) === keyState) {
 			return;
 		}
 		
-		this.keyStates.set(keyCode, keyState);
+		this.keyStates.set(code, keyState);
 		
-		this.keyMap.get(keyCode)(keyState);
+		this.keyMap.get(code)(keyState);
 	}
 	
 	
