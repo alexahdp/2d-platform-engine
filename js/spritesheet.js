@@ -1,4 +1,4 @@
-class SpriteSheet {
+export default class SpriteSheet {
 	constructor(image, width, height) {
 		this.image = image;
 		this.width = width;
@@ -39,5 +39,3 @@ class SpriteSheet {
 		this.draw(name, context, x * this.width, y * this.height);
 	}
 }
-
-export default SpriteSheet;

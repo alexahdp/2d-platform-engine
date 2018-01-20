@@ -1,4 +1,4 @@
-import Vec2 from './vec2.js'
+import Vec2 from './math.js'
 
 export class Trait {
 	constructor(name) {

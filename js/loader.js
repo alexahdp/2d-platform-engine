@@ -1,3 +1,7 @@
+import Level from './level.js'
+import {createBackgroundLayer, createSpriteLayer} from './layers.js'
+import {loadBackgroundSprite} from './sprites.js'
+
 export function loadImage(url) {
 	return new Promise((res, rej) => {
 		const image = new Image(url);
@@ -7,7 +11,35 @@ export function loadImage(url) {
 }
 
 
+function createTiles(level, backgrounds) {
+	backgrounds.forEach(background => {
+		background.ranges.forEach(([x1, x2, y1, y2]) => {
+			for (let x = x1; x < x2; x++) {
+				for (let y = y1; y < y2; y++) {
+					level.tiles.set(x, y, {
+						name: background.tile
+					});
+				}
+			}
+		});
+	})
+}
+
+
 export async function loadLevel(name) {
-	const res = await fetch(`/levels/${name}.json`);
-	return res.json();
+	const [levelSpec, backgroundSprites] = await Promise.all([
+		fetch(`/levels/${name}.json`).then(r => r.json()),
+		loadBackgroundSprite()
+	]);
+	
+	const level = new Level();
+	createTiles(level, levelSpec.backgrounds);
+	
+	const backgroundLayer = createBackgroundLayer(level, backgroundSprites);
+	level.comp.layers.push(backgroundLayer);
+	
+	const marioLayer = createSpriteLayer(level.entities);
+	level.comp.layers.push(marioLayer);
+	
+	return level;
 }
