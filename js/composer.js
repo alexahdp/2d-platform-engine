@@ -3,7 +3,9 @@ export default class Composer {
 		this.layers = [];
 	}
 	
-	draw(context, ...args) {
-		this.layers.forEach(layer => layer(context, ...args));
+	draw(context, camera) {
+		this.layers.forEach(layer => {
+			layer(context, camera)
+		});
 	}
 }

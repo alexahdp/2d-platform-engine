@@ -9,6 +9,7 @@ export default class Level {
 		this.tiles = new Matrix();
 		this.tileCollider = new TileCollider(this.tiles);
 		this.gravity = 2000;
+		//this.gravity = 0;
 	}
 	
 	update(deltaTime) {

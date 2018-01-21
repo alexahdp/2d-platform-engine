@@ -5,7 +5,6 @@ export class Trait {
 		this.NAME = name;
 	}
 	
-	
 	update() {
 		console.log('unhandle')
 	}
