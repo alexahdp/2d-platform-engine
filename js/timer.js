@@ -6,6 +6,10 @@ export default class Timer {
 		this.updateProxy = time => {
 			accumulatedTime += (time - lastTime) / 1000;
 			
+			if (accumulatedTime > 1) {
+				accumulatedTime = 1;
+			}
+			
 			// это злоебучий хак для борьбы с переменной высотой прыжка
 			// и для постоянной скорости независимо от просадки fps
 			while (accumulatedTime > deltaTime) {

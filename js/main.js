@@ -21,8 +21,8 @@ const context = canvas.getContext('2d');
 		createMario(context)
 	]);
 	
-	level.comp.layers.push(createCollitionLayer(level));
-	level.comp.layers.push(createCameraLayer(camera));
+	// level.comp.layers.push(createCollitionLayer(level));
+	// level.comp.layers.push(createCameraLayer(camera));
 	
 	mario.pos.set(64, 100);
 	
