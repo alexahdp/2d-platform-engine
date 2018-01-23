@@ -9,7 +9,6 @@ export default class SpriteSheet {
 	
 	defineAnim(name, animation) {
 		this.animations.set(name, animation);
-		
 	}
 	
 	define(name, x, y, width, height) {
@@ -48,6 +47,11 @@ export default class SpriteSheet {
 	}
 	
 	draw(name, context, x, y, flip = false) {
+		if (!this.tiles.get(name)) {
+			console.log(name)
+			console.log(this.tiles.get(name))
+			console.log(flip)
+		}
 		const buffer = this.tiles.get(name)[flip ? 1 : 0];
 		context.drawImage(buffer, x, y);
 	}

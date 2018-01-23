@@ -13,10 +13,20 @@ export default async function createMario() {
 	mario.addTrait(new Go())
 	mario.addTrait(new Jump())
 	
-	const runAnim = createAnim(['run-1', 'run-2', 'run-3'], 10);
+	// частота ротации спрайтов анимации при ходьбе
+	const frameFreq = 7;
+	
+	const runAnim = createAnim(['run-1', 'run-2', 'run-3'], frameFreq);
 	
 	function routeFrame(mario) {
-		if (mario.go.dir !== 0) {
+		if (mario.go.distance > 0) {
+			if (mario.jump.falling) {
+				return 'jump';
+			}
+			else if (mario.vel.x > 0 && mario.go.dir < 0 || mario.vel.x < 0 && mario.go.dir > 0) {
+				return 'break';
+			}
+			
 			return runAnim(mario.go.distance);
 		}
 		
