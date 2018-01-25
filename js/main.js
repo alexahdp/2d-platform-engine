@@ -1,4 +1,4 @@
-import {loadLevel} from './loader.js'
+import {loadLevel} from './loaders/level.js'
 import Composer from './composer.js'
 import Entity from './entity.js'
 import createMario from './entities.js'
@@ -41,5 +41,6 @@ const context = canvas.getContext('2d');
 })()
 .catch(err => {
 	console.log('FATAL ERROR');
-	console.log(err);
+	console.log(err.message);
+	console.log(err.stack);
 });
