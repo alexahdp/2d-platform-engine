@@ -1,8 +1,12 @@
 import Vec2 from './math.js'
+import BoundingBox from './bounding_box.js'
+
 export const SIDES = {
-	TOP: Symbol('top'),
-	BOTTOM: Symbol('bottom'),
-}
+	TOP    : Symbol('top'),
+	BOTTOM : Symbol('bottom'),
+	LEFT   : Symbol('left'),
+	RIGHT  : Symbol('right')
+};
 
 const FAST_DRAG = 1 / 5000;
 const SLOW_DRAG = 1 / 2000;
@@ -24,7 +28,10 @@ export default class Entity {
 		this.pos = new Vec2(0, 0);
 		this.vel = new Vec2(0, 0);
 		this.size = new Vec2(0, 0);
+		this.offset = new Vec2(0, 0);
+		this.bounds = new BoundingBox(this.pos, this.size, this.offset);
 		
+		this.lifetime = 0;
 		this.traits = [];
 		this.dragFactor = SLOW_DRAG;
 	}
@@ -40,6 +47,7 @@ export default class Entity {
 		this.traits.forEach(trait => {
 			trait.update(this, deltaTime);
 		});
+		this.lifetime += deltaTime;
 	}
 	
 	obstruct(side) {
