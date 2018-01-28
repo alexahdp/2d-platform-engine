@@ -19,12 +19,17 @@ export class Trait {
 	obstruct() {}
 	
 	update() {
-		console.log('unhandle')
+	}
+	
+	collides(us, them) {
+		
 	}
 }
 
 export default class Entity {
 	constructor() {
+		this.canCollide = true;
+		
 		this.pos = new Vec2(0, 0);
 		this.vel = new Vec2(0, 0);
 		this.size = new Vec2(0, 0);
@@ -43,9 +48,9 @@ export default class Entity {
 	}
 	
 	
-	update(deltaTime) {
+	update(deltaTime, level) {
 		this.traits.forEach(trait => {
-			trait.update(this, deltaTime);
+			trait.update(this, deltaTime, level);
 		});
 		this.lifetime += deltaTime;
 	}
@@ -59,4 +64,12 @@ export default class Entity {
 	turbo(keyState) {
 		this.go.dragFactor = keyState ? FAST_DRAG : SLOW_DRAG;
 	}
+	
+	collides(candidate) {
+		this.traits.forEach(trait => {
+			trait.collides(this, candidate);
+		});
+	}
+	
+	draw() {}
 }
