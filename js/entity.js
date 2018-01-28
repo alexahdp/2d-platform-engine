@@ -14,6 +14,16 @@ const SLOW_DRAG = 1 / 2000;
 export class Trait {
 	constructor(name) {
 		this.NAME = name;
+		this.tasks = [];
+	}
+	
+	finalize() {
+		this.tasks.forEach(task => task());
+		this.tasks.length = 0;
+	}
+	
+	queue(task) {
+		this.tasks.push(task);
 	}
 	
 	obstruct() {}
@@ -55,9 +65,9 @@ export default class Entity {
 		this.lifetime += deltaTime;
 	}
 	
-	obstruct(side) {
+	obstruct(side, match) {
 		this.traits.forEach(trait => {
-			trait.obstruct(this, side);
+			trait.obstruct(this, side, match);
 		});
 	}
 	
@@ -72,4 +82,8 @@ export default class Entity {
 	}
 	
 	draw() {}
+	
+	finalize() {
+		this.traits.forEach(trait => trait.finalize());
+	}
 }

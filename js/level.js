@@ -22,26 +22,20 @@ export default class Level {
 	update(deltaTime) {
 		this.entities.forEach(entity => {
 			entity.update(deltaTime, this);
-			
-			entity.pos.x += entity.vel.x * deltaTime;
-			if (entity.canCollide) {
-				this.tileCollider.checkX(entity);
-			}
-			
-			entity.pos.y += entity.vel.y * deltaTime;
-			if (entity.canCollide) {
-				this.tileCollider.checkY(entity);
-			}
-			
-			entity.vel.y += this.gravity * deltaTime;
 		});
 		
 		// проверка коллизий должна выполняться в отдельном цикле
 		// иначе возможно ситуация, когда неправильно обсчитываются взаимодействия
 		this.entities.forEach(entity => {
-			if (entity.canCollide) {
-				this.entityCollider.check(entity);
-			}
+			this.entityCollider.check(entity);
+		});
+		
+		// finalize нужен для избежания гонки за "ресурсы"
+		// когда мы убили goomba, мы должны от него отпрыгнуть только один раз
+		// поэтому свойство dead должно установиться у него не сразу после коллайдинга,
+		// а позднее, когда mario получит импульс отталкивания
+		this.entities.forEach(entity => {
+			entity.finalize();
 		});
 		
 		this.totalTime += deltaTime;
