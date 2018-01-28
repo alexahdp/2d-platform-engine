@@ -1,5 +1,6 @@
 import Level from '../level.js'
-import {createBackgroundLayer, createSpriteLayer} from '../layers.js'
+import {createSpriteLayer} from '../layers/sprites.js'
+import {createBackgroundLayer} from '../layers/background.js'
 import {loadJson, loadSpriteSheet} from '../loader.js'
 import {Matrix} from '../math.js'
 
